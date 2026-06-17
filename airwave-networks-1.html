@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Airwave Networks — Powered by Safaricom</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #00A651;
+    --lime: #39FF14;
+    --black: #0A0A0A;
+    --dark: #111111;
+    --gray: #1C1C1C;
+    --white: #FFFFFF;
+    --muted: #A0A0A0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 5%;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,166,81,0.2);
+  }
+  .nav-brand { display: flex; align-items: center; gap: 14px; }
+  .nav-brand .saf-badge {
+    background: var(--green);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+  .nav-logo span { color: var(--lime); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--lime); }
+  .nav-cta {
+    background: var(--green); color: white;
+    padding: 10px 22px; border-radius: 50px;
+    font-size: 14px; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: #00c960; transform: scale(1.03); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,166,81,0.13) 0%, transparent 70%),
+                var(--black);
+  }
+
+  /* Animated signal rings */
+  .signal-rings {
+    position: absolute; right: 5%; top: 50%;
+    transform: translateY(-50%);
+    width: 520px; height: 520px;
+    pointer-events: none;
+  }
+  .ring {
+    position: absolute; border-radius: 50%;
+    border: 1.5px solid rgba(57,255,20,0.25);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    animation: pulse-ring 3s ease-out infinite;
+  }
+  .ring:nth-child(1) { width: 120px; height: 120px; animation-delay: 0s; border-color: rgba(57,255,20,0.6); }
+  .ring:nth-child(2) { width: 240px; height: 240px; animation-delay: 0.6s; }
+  .ring:nth-child(3) { width: 360px; height: 360px; animation-delay: 1.2s; }
+  .ring:nth-child(4) { width: 480px; height: 480px; animation-delay: 1.8s; }
+  .ring-dot {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--lime);
+    box-shadow: 0 0 24px var(--lime);
+  }
+  @keyframes pulse-ring {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,166,81,0.15);
+    border: 1px solid rgba(0,166,81,0.4);
+    padding: 6px 14px; border-radius: 50px;
+    font-size: 12px; font-weight: 600;
+    color: var(--lime); letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 24px;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--lime);
+    animation: blink 1.2s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(52px, 8vw, 100px);
+    font-weight: 900;
+    line-height: 0.95;
+    text-transform: uppercase;
+    max-width: 700px;
+    margin-bottom: 24px;
+  }
+  .hero h1 .accent { color: var(--lime); }
+  .hero p {
+    font-size: 18px; line-height: 1.65;
+    color: var(--muted); max-width: 480px;
+    margin-bottom: 40px;
+  }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--green); color: white;
+    padding: 16px 36px; border-radius: 50px;
+    font-size: 15px; font-weight: 700;
+    text-decoration: none; display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.5px;
+  }
+  .btn-primary:hover { background: #00c960; transform: translateY(-2px); }
+  .btn-outline {
+    border: 1.5px solid rgba(255,255,255,0.3); color: white;
+    padding: 16px 36px; border-radius: 50px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none; display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--lime); color: var(--lime); }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 60px;
+    flex-wrap: wrap;
+  }
+  .stat-item { }
+  .stat-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 42px; font-weight: 900;
+    color: var(--lime); line-height: 1;
+  }
+  .stat-label { font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 4px; }
+
+  /* POWERED BY */
+  .powered-bar {
+    background: var(--green);
+    padding: 14px 5%;
+    display: flex; align-items: center; justify-content: center;
+    gap: 16px;
+    font-size: 14px; font-weight: 600; letter-spacing: 1px;
+  }
+  .powered-bar img { height: 22px; }
+  .powered-bar .divider { width: 1px; height: 20px; background: rgba(255,255,255,0.4); }
+
+  /* FEATURES */
+  .section { padding: 100px 5%; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--lime);
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 900; text-transform: uppercase;
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+  .section-sub { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 520px; }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2px; margin-top: 60px;
+  }
+  .feature-card {
+    background: var(--gray);
+    padding: 40px 32px;
+    transition: background 0.2s;
+  }
+  .feature-card:hover { background: #222; }
+  .feature-icon {
+    width: 48px; height: 48px;
+    background: rgba(57,255,20,0.12);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+  }
+  .feature-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px; font-weight: 700;
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* INSTALLATION */
+  .install-section {
+    background: var(--dark);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; min-height: 600px;
+  }
+  .install-photos {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+    background: #000;
+  }
+  .install-photos img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+    filter: brightness(0.85);
+    transition: filter 0.3s;
+  }
+  .install-photos img:hover { filter: brightness(1); }
+  .install-content {
+    padding: 80px 60px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .steps { margin-top: 40px; display: flex; flex-direction: column; gap: 28px; }
+  .step { display: flex; gap: 20px; align-items: flex-start; }
+  .step-num {
+    min-width: 36px; height: 36px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px; font-weight: 900;
+    flex-shrink: 0;
+  }
+  .step-body h4 {
+    font-size: 16px; font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .step-body p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* PACKAGES */
+  .packages-section { background: var(--black); }
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 3px; margin-top: 60px;
+  }
+  .package-card {
+    background: var(--gray); padding: 44px 32px;
+    position: relative; overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .package-card:hover { transform: translateY(-4px); }
+  .package-card.featured {
+    background: var(--green);
+  }
+  .package-card.featured .pkg-speed,
+  .package-card.featured .pkg-label,
+  .package-card.featured .pkg-price,
+  .package-card.featured .pkg-period,
+  .package-card.featured .pkg-feature { color: white; }
+  .package-card.featured .pkg-tag { background: var(--lime); color: #000; }
+  .pkg-tag {
+    display: inline-block;
+    background: rgba(57,255,20,0.15);
+    color: var(--lime);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 3px;
+    margin-bottom: 24px;
+  }
+  .pkg-speed {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 60px; font-weight: 900; line-height: 1;
+    color: var(--white);
+  }
+  .pkg-label { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px; }
+  .pkg-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 40px; font-weight: 900;
+    color: var(--lime); line-height: 1;
+  }
+  .package-card.featured .pkg-price { color: var(--lime); }
+  .pkg-period { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+  .pkg-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .pkg-feature {
+    font-size: 14px; color: #ccc;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pkg-feature::before { content: '✓'; color: var(--lime); font-weight: 700; }
+  .pkg-btn {
+    display: block; text-align: center;
+    margin-top: 32px; padding: 14px;
+    border-radius: 50px;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .pkg-btn-dark { background: rgba(255,255,255,0.08); color: white; }
+  .pkg-btn-dark:hover { background: rgba(255,255,255,0.15); }
+  .pkg-btn-light { background: white; color: #000; }
+  .pkg-btn-light:hover { background: var(--lime); }
+
+  /* ABOUT SAFARICOM */
+  .safaricom-section {
+    background: var(--green);
+    padding: 100px 5%;
+    text-align: center;
+  }
+  .safaricom-section .section-label { color: rgba(255,255,255,0.6); }
+  .safaricom-section .section-title { color: white; max-width: 700px; margin: 0 auto 20px; }
+  .safaricom-section p { color: rgba(255,255,255,0.8); font-size: 17px; line-height: 1.7; max-width: 600px; margin: 0 auto 40px; }
+  .saf-logo-large {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.15);
+    padding: 16px 32px; border-radius: 50px;
+    font-size: 22px; font-weight: 700;
+    color: white; margin-bottom: 40px;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--dark);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .contact-info { padding: 100px 5% 100px 5%; }
+  .contact-methods { display: flex; flex-direction: column; gap: 24px; margin-top: 40px; }
+  .contact-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 20px 24px;
+    background: var(--gray);
+    border-radius: 8px;
+    text-decoration: none; color: white;
+    transition: background 0.2s;
+  }
+  .contact-item:hover { background: #252525; }
+  .contact-icon {
+    width: 44px; height: 44px;
+    background: rgba(57,255,20,0.12);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .contact-item-label { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .contact-item-value { font-size: 16px; font-weight: 700; }
+  .contact-map {
+    background: #0d1a10;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .contact-map-inner {
+    text-align: center; padding: 40px;
+  }
+  .map-signal {
+    width: 200px; height: 200px;
+    position: relative; margin: 0 auto 32px;
+  }
+  .map-ring {
+    position: absolute; border-radius: 50%;
+    border: 2px solid rgba(0,166,81,0.3);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: map-pulse 2.5s ease-out infinite;
+  }
+  .map-ring:nth-child(1) { width: 60px; height: 60px; }
+  .map-ring:nth-child(2) { width: 110px; height: 110px; animation-delay: 0.5s; }
+  .map-ring:nth-child(3) { width: 160px; height: 160px; animation-delay: 1s; }
+  .map-ring:nth-child(4) { width: 200px; height: 200px; animation-delay: 1.5s; }
+  .map-center {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 20px var(--green);
+  }
+  @keyframes map-pulse {
+    0% { opacity: 1; transform: translate(-50%,-50%) scale(0.4); }
+    100% { opacity: 0; transform: translate(-50%,-50%) scale(1); }
+  }
+  .contact-map p { color: var(--muted); font-size: 15px; line-height: 1.7; }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid #1c1c1c;
+    padding: 60px 5% 30px;
+  }
+  .footer-top {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 40px; flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .footer-brand .nav-logo { font-size: 26px; margin-bottom: 10px; }
+  .footer-brand p { font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 280px; }
+  .footer-links h5 {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    color: var(--muted); text-transform: uppercase; margin-bottom: 16px;
+  }
+  .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { color: #888; font-size: 14px; text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--lime); }
+  .footer-bottom {
+    border-top: 1px solid #1c1c1c;
+    padding-top: 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 13px; color: #555; }
+  .footer-bottom .saf-credit {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: #555;
+  }
+  .saf-green { color: var(--green); font-weight: 700; }
+
+  @media (max-width: 768px) {
+    .nav-links, .nav-cta { display: none; }
+    .install-section, .contact-section { grid-template-columns: 1fr; }
+    .install-photos { height: 300px; }
+    .signal-rings { display: none; }
+    .hero h1 { font-size: 54px; }
+    .install-content { padding: 60px 5%; }
+    .contact-info { padding: 60px 5%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">AIR<span>WAVE</span> NETWORKS</div>
+    <span class="saf-badge">Powered by Safaricom</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#features">Services</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#install">Installation</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:+254708248732" class="nav-cta">📞 Get Connected</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="signal-rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring-dot"></div>
+  </div>
+
+  <div class="hero-eyebrow">Live Signal Active — Nairobi &amp; Surrounds</div>
+  <h1>Your<br><span class="accent">Connection,</span><br>Our Commitment</h1>
+  <p>Airwave Networks brings blazing-fast fibre internet to your home and business — powered by Safaricom's world-class infrastructure. Free installation. No data caps.</p>
+  <div class="hero-actions">
+    <a href="tel:+254708248732" class="btn-primary">📞 Call +254 708 248732</a>
+    <a href="https://wa.me/254708248732" class="btn-outline">💬 WhatsApp Us</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-number">1,500</div>
+      <div class="stat-label">Starting from KES/month</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">24/7</div>
+      <div class="stat-label">Customer Support</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Unlimited Data</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">FREE</div>
+      <div class="stat-label">Installation</div>
+    </div>
+  </div>
+</section>
+
+<!-- POWERED BY SAFARICOM BAR -->
+<div class="powered-bar">
+  <span>🌐 OFFICIAL SAFARICOM PARTNER</span>
+  <div class="divider"></div>
+  <span>Twaweza — We Can</span>
+  <div class="divider"></div>
+  <span>4G &amp; FIBRE CERTIFIED</span>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="section-label">Why Airwave</div>
+  <h2 class="section-title">Internet That<br>Works As Hard<br>As You Do</h2>
+  <p class="section-sub">Built on Safaricom's national backbone, Airwave delivers connectivity with zero compromise — whether you're streaming, working, or scaling your business.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Super Fast Speed</h3>
+      <p>High-speed fibre internet that handles everything from 4K streaming to large file uploads without breaking a sweat.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📶</div>
+      <h3>Strong Connection</h3>
+      <p>Stable, consistent signal powered by Safaricom's fibre infrastructure — no drop-outs, no dead zones.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🛡️</div>
+      <h3>100% Reliability</h3>
+      <p>We back our service with a reliability guarantee. Downtime costs you money; we take that seriously.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎧</div>
+      <h3>24/7 Support</h3>
+      <p>Real humans available around the clock. Call or WhatsApp us any time — we're always on.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏠</div>
+      <h3>Home & Business</h3>
+      <p>Tailored packages for households and enterprises alike. One provider, every need covered.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔧</div>
+      <h3>Free Installation</h3>
+      <p>Our certified technicians handle everything end-to-end. You pay for internet, not setup.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALLATION -->
+<div class="install-section" id="install">
+  <div class="install-photos">
+    <img src="/mnt/user-data/uploads/370349.jpg" alt="Technician installing fibre on pole">
+    <img src="/mnt/user-data/uploads/370348.jpg" alt="Safaricom service vehicle on site">
+  </div>
+  <div class="install-content">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">From Call<br>To Connected<br>In No Time</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Call or WhatsApp Us</h4>
+          <p>Reach out on +254 708 248732 and tell us your location. We'll confirm coverage immediately.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Pick Your Package</h4>
+          <p>Our team walks you through options starting from KES 1,500/month — home or business.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>We Come to You</h4>
+          <p>Our certified Safaricom technicians arrive at your preferred time and handle the full installation.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Stay Connected</h4>
+          <p>You're online. We monitor your connection and remain available 24/7 for any support.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PACKAGES -->
+<section class="section packages-section" id="packages">
+  <div class="section-label">Pricing</div>
+  <h2 class="section-title">Monthly Internet<br>Packages</h2>
+  <p class="section-sub">All packages include free installation, unlimited data, and 24/7 support. No hidden fees.</p>
+
+  <div class="packages-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+    <div class="package-card">
+      <span class="pkg-tag">Starter</span>
+      <div class="pkg-speed">10</div>
+      <div class="pkg-label">Mbps Fibre</div>
+      <div class="pkg-price">KES 1,500</div>
+      <div class="pkg-period">per month</div>
+      <ul class="pkg-features">
+        <li class="pkg-feature">Unlimited Data</li>
+        <li class="pkg-feature">Free Installation</li>
+        <li class="pkg-feature">Gaming Lag-Free</li>
+        <li class="pkg-feature">24/7 Support</li>
+      </ul>
+      <a href="https://wa.me/254708248732?text=I'm interested in the 10Mbps - KES 1,500 package" class="pkg-btn pkg-btn-dark">Get Started</a>
+    </div>
+
+    <div class="package-card">
+      <span class="pkg-tag">Home</span>
+      <div class="pkg-speed">20</div>
+      <div class="pkg-label">Mbps Fibre</div>
+      <div class="pkg-price">KES 2,000</div>
+      <div class="pkg-period">per month</div>
+      <ul class="pkg-features">
+        <li class="pkg-feature">Unlimited Data</li>
+        <li class="pkg-feature">Free Installation</li>
+        <li class="pkg-feature">Ultra HD Streaming</li>
+        <li class="pkg-feature">24/7 Support</li>
+      </ul>
+      <a href="https://wa.me/254708248732?text=I'm interested in the 20Mbps - KES 2,000 package" class="pkg-btn pkg-btn-dark">Get Started</a>
+    </div>
+
+    <div class="package-card featured">
+      <span class="pkg-tag">Most Popular</span>
+      <div class="pkg-speed">30</div>
+      <div class="pkg-label">Mbps Fibre</div>
+      <div class="pkg-price">KES 3,000</div>
+      <div class="pkg-period">per month</div>
+      <ul class="pkg-features">
+        <li class="pkg-feature">Unlimited Data</li>
+        <li class="pkg-feature">Free Installation</li>
+        <li class="pkg-feature">Remote Work Ready</li>
+        <li class="pkg-feature">Smart Home</li>
+        <li class="pkg-feature">24/7 Support</li>
+      </ul>
+      <a href="https://wa.me/254708248732?text=I'm interested in the 30Mbps - KES 3,000 package" class="pkg-btn pkg-btn-light">Get Started</a>
+    </div>
+
+    <div class="package-card">
+      <span class="pkg-tag">Business</span>
+      <div class="pkg-speed">40</div>
+      <div class="pkg-label">Mbps Fibre</div>
+      <div class="pkg-price">KES 4,000</div>
+      <div class="pkg-period">per month</div>
+      <ul class="pkg-features">
+        <li class="pkg-feature">Unlimited Data</li>
+        <li class="pkg-feature">Free Installation</li>
+        <li class="pkg-feature">Multiple Devices</li>
+        <li class="pkg-feature">Priority Support</li>
+      </ul>
+      <a href="https://wa.me/254708248732?text=I'm interested in the 40Mbps - KES 4,000 package" class="pkg-btn pkg-btn-dark">Get Started</a>
+    </div>
+
+    <div class="package-card">
+      <span class="pkg-tag">Premium</span>
+      <div class="pkg-speed">50</div>
+      <div class="pkg-label">Mbps Fibre</div>
+      <div class="pkg-price">KES 5,000</div>
+      <div class="pkg-period">per month</div>
+      <ul class="pkg-features">
+        <li class="pkg-feature">Unlimited Data</li>
+        <li class="pkg-feature">Free Installation</li>
+        <li class="pkg-feature">Max Speed</li>
+        <li class="pkg-feature">Dedicated Support</li>
+      </ul>
+      <a href="https://wa.me/254708248732?text=I'm interested in the 50Mbps - KES 5,000 package" class="pkg-btn pkg-btn-dark">Get Started</a>
+    </div>
+  </div>
+  <p style="text-align:center; margin-top: 28px; color: var(--muted); font-size: 14px;">
+    <span style="color: var(--lime); font-weight: 700;">✓ No Hidden Fees</span> &nbsp;|&nbsp; <span style="color: var(--lime); font-weight: 700;">✓ Unlimited Possibilities</span>
+  </p>
+</section>
+
+<!-- SAFARICOM SECTION -->
+<section class="safaricom-section">
+  <div class="section-label">Our Backbone</div>
+  <div class="saf-logo-large">📡 Safaricom — Twaweza</div>
+  <h2 class="section-title">The Nation's Most<br>Trusted Network</h2>
+  <p>Airwave Networks operates as an authorised Safaricom partner, leveraging Kenya's most extensive fibre and 4G infrastructure to deliver world-class connectivity to homes and businesses across our coverage area.</p>
+  <a href="tel:+254708248732" class="btn-primary" style="background:white; color: #00A651;">📞 Call Now to Connect</a>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-info">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Ready to<br>Get Online?</h2>
+    <p style="color: var(--muted); margin: 16px 0 40px; line-height: 1.7;">One call or message is all it takes. Our team will confirm your coverage, explain the packages, and schedule installation at your convenience.</p>
+
+    <div class="contact-methods">
+      <a href="tel:+254708248732" class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-item-label">Call Us</div>
+          <div class="contact-item-value">+254 708 248732</div>
+        </div>
+      </a>
+      <a href="https://wa.me/254708248732" class="contact-item">
+        <div class="contact-icon">💬</div>
+        <div>
+          <div class="contact-item-label">WhatsApp</div>
+          <div class="contact-item-value">+254 708 248732</div>
+        </div>
+      </a>
+      <div class="contact-item" style="cursor: default;">
+        <div class="contact-icon">⏰</div>
+        <div>
+          <div class="contact-item-label">Support Hours</div>
+          <div class="contact-item-value">24 Hours, 7 Days</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-map">
+    <div class="contact-map-inner">
+      <div class="map-signal">
+        <div class="map-ring"></div>
+        <div class="map-ring"></div>
+        <div class="map-ring"></div>
+        <div class="map-ring"></div>
+        <div class="map-center"></div>
+      </div>
+      <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; color: white; margin-bottom: 12px; text-transform: uppercase;">Covering Your Area</h3>
+      <p>Powered by Safaricom's extensive fibre network across Nairobi and surrounding regions. Contact us to confirm coverage in your exact location.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="nav-logo">AIR<span style="color:var(--lime)">WAVE</span> NETWORKS</div>
+      <p style="margin-top: 10px;">Fast, Reliable, Unlimited Internet — Your Connection, Our Commitment.</p>
+      <p style="margin-top: 8px; font-size: 13px; color: #555;">An authorised Safaricom partner.</p>
+    </div>
+
+    <div class="footer-links">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#features">Home Internet</a></li>
+        <li><a href="#features">Business Internet</a></li>
+        <li><a href="#install">Fibre Installation</a></li>
+        <li><a href="#packages">View Packages</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-links">
+      <h5>Support</h5>
+      <ul>
+        <li><a href="tel:+254708248732">Call Support</a></li>
+        <li><a href="https://wa.me/254708248732">WhatsApp</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-links">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="tel:+254708248732">+254 708 248732</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Airwave Networks. All rights reserved.</p>
+    <div class="saf-credit">Powered by <span class="saf-green" style="margin-left:5px;">Safaricom — Twaweza</span></div>
+  </div>
+</footer>
+
+</body>
+</html>
