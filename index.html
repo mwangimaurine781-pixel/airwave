@@ -37,6 +37,7 @@
         .logo span { color: var(--primary); }
         .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
         .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
+        .nav-links a:hover { color: var(--primary); }
         .btn-nav { background: var(--primary); color: #000 !important; padding: 10px 20px; border-radius: 8px; font-weight: 700 !important; text-decoration: none; }
         .hero { padding: 180px 24px 140px 24px; position: relative; background-image: linear-gradient(to bottom, rgba(7, 10, 19, 0.5), var(--bg-dark)), url('https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; background-attachment: fixed; border-bottom: 1px solid var(--border); text-align: center; }
         .partner-badge { display: inline-flex; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--primary); padding: 6px 16px; border-radius: 100px; font-size: 13px; font-weight: 600; margin-bottom: 24px; text-transform: uppercase; }
@@ -47,9 +48,13 @@
         .btn-primary { background: var(--primary); color: #000; text-decoration: none; padding: 16px 32px; border-radius: 10px; font-weight: 700; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3); }
         .btn-secondary { background: rgba(7, 10, 19, 0.6); border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(8px); color: var(--text-main); text-decoration: none; padding: 16px 32px; border-radius: 10px; font-weight: 600; }
         .features { max-width: 1200px; margin: -40px auto 0 auto; position: relative; z-index: 10; padding: 0 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-        .feature-card { background: rgba(21, 27, 44, 0.85); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); padding: 32px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .feature-card { background: rgba(21, 27, 44, 0.85); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); padding: 32px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: left; }
         .feature-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
         .feature-card p { color: var(--text-muted); font-size: 14px; }
+        .about-section { max-width: 1200px; margin: 80px auto 0 auto; padding: 60px 24px; text-align: center; }
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; margin-top: 40px; }
+        .about-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; text-align: left; }
+        .about-card h4 { font-size: 20px; color: var(--primary); margin-bottom: 12px; }
         .pricing-section { max-width: 1200px; margin: 0 auto; padding: 100px 24px; text-align: center; }
         .section-header h2 { font-size: 40px; font-weight: 800; margin-bottom: 16px; }
         .section-header p { color: var(--text-muted); margin-bottom: 60px; }
@@ -84,6 +89,7 @@
         <div class="nav-container">
             <div class="logo">Airwave <span>Networks</span></div>
             <ul class="nav-links">
+                <li><a href="#about">About Us</a></li>
                 <li><a href="#features">Features</a></li>
                 <li><a href="#packages">Packages</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -98,90 +104,4 @@
             <p>Experience blazing-fast broadband internet tailored seamlessly for modern households and expanding corporate enterprises across Kenya.</p>
             <div class="cta-group">
                 <a href="#packages" class="btn-primary">View Packages</a>
-                <a href="https://wa.me/254708248732" target="_blank" class="btn-secondary">Chat on WhatsApp</a>
-            </div>
-        </div>
-    </header>
-    <section class="features" id="features">
-        <div class="feature-card">
-            <h3>Free Installation</h3>
-            <p>Certified Safaricom technical engineering deployment teams deliver seamless configuration directly onto your premises at zero cost.</p>
-        </div>
-        <div class="feature-card">
-            <h3>100% Unlimited Data</h3>
-            <p>No fair usage caps, unexpected slowdowns, or hidden multi-tier parameters. Enjoy completely unlimited possibilities.</p>
-        </div>
-        <div class="feature-card">
-            <h3>24/7 Human Support</h3>
-            <p>Access round-the-clock connectivity tracking and immediate live agent response lines whenever you require setup assistance.</p>
-        </div>
-    </section>
-    <section class="pricing-section" id="packages">
-        <div class="section-header">
-            <h2>Our Internet Packages</h2>
-            <p>Transparent pricing metrics structured to match your exact home or organizational bandwidth performance requirements.</p>
-        </div>
-        <div class="pricing-grid">
-            <div class="price-card">
-                <div class="card-tier">Home Light</div>
-                <div class="card-speed">10 Mbps</div>
-                <div class="card-price"><span class="amount">KES 1,500</span><span class="period">/ month</span></div>
-                <ul class="card-features">
-                    <li>Gaming Lag-Free</li>
-                    <li>Uncapped Fiber Stream</li>
-                    <li>Free Cable Onboarding</li>
-                </ul>
-                <a href="https://wa.me/254708248732?text=Hi,%20I'm%20interested%20in%20the%2010Mbps%20package" target="_blank" class="btn-card">Get Started</a>
-            </div>
-            <div class="price-card popular">
-                <div class="popular-tag">Most Popular</div>
-                <div class="card-tier">Home Standard</div>
-                <div class="card-speed">20 Mbps</div>
-                <div class="card-price"><span class="amount">KES 2,000</span><span class="period">/ month</span></div>
-                <ul class="card-features">
-                    <li>Ultra HD Video Streaming</li>
-                    <li>Multi-Device Allocation</li>
-                    <li>Perfect for Remote Work</li>
-                </ul>
-                <a href="https://wa.me/254708248732?text=Hi,%20I'm%20interested%20in%20the%2020Mbps%20package" target="_blank" class="btn-card">Get Started</a>
-            </div>
-            <div class="price-card">
-                <div class="card-tier">Home Premium</div>
-                <div class="card-speed">30 Mbps</div>
-                <div class="card-price"><span class="amount">KES 3,000</span><span class="period">/ month</span></div>
-                <ul class="card-features">
-                    <li>High-Speed Multi-User</li>
-                    <li>Heavy File Uploads</li>
-                    <li>Seamless Smart-TVs</li>
-                </ul>
-                <a href="https://wa.me/254708248732?text=Hi,%20I'm%20interested%20in%20the%2030Mbps%20package" target="_blank" class="btn-card">Get Started</a>
-            </div>
-        </div>
-    </section>
-    <section class="cta-banner">
-        <h2>Ready to Experience True Fiber Speed?</h2>
-        <p style="color: var(--text-muted); margin-bottom: 24px;">Our engineering deployment crew handles everything end-to-end so you can stay online continuously.</p>
-        <a href="tel:+254708248732" class="btn-primary">Call Now to Setup</a>
-    </section>
-    <footer id="contact">
-        <div class="footer-container">
-            <div class="footer-brand">
-                <h2>Airwave <span>Networks</span></h2>
-                <p>Bringing blazing-fast fiber infrastructure straight to your doorstep via reliable national pipelines.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Corporate Channels</h4>
-                <ul class="footer-links">
-                    <li><strong>Phone:</strong> +254 708 248732</li>
-                    <li><strong>WhatsApp:</strong> +254 708 248732</li>
-                    <li><strong>Email:</strong> info@airwavenetworks.co.ke</li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div>&copy; 2026 Airwave Networks. All rights reserved.</div>
-            <div>Powered by Safaricom</div>
-        </div>
-    </footer>
-</body>
-</html>
+                <a href="
